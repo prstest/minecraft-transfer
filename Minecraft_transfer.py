@@ -45,6 +45,12 @@ def read_coordinate(file_path):
     return coordinate
 
 # 读取文件内容
+print("================维度================")
+print("0：当前世界")
+print("1：主世界")
+print("2：末地")
+print("3：地狱")
+print("================坐标================")
 coordinate_list = read_coordinate('coordinate.txt')
 if not coordinate_list:
     print("坐标列表为空，请检查文件内容和格式。")
@@ -52,12 +58,11 @@ if not coordinate_list:
 
 for serial, content, x, y, z in coordinate_list:
     print(f"{serial}: {content} - 位置({x}, {y}, {z})")
-
-# 进入一个循环，直到找到目标窗口并处理用户输入
 while True:
     # 获取当前活动窗口的标题
     current_title = check_active_window()
-
+    print("")
+    user_dimensionality = int(input("请输入维度："))
     user_input = input("请输入序号或内容: ")
     if user_input:
         matched = False
@@ -69,8 +74,21 @@ while True:
                 if current_title and target_pattern.search(current_title):
                     time.sleep(1)
                     pyautogui.hotkey('/')
-                    pyautogui.write(f"tp {x} {y} {z}", interval=0)
+                    dimension = ""
+                    if user_dimensionality == 0:
+                        pyautogui.write(f"tp  {x} {y} {z}", interval=0)
+                        dimension = "当前世界"
+                    elif user_dimensionality == 1:
+                        pyautogui.write(f"execute in minecraft:overworld run tp  {x} {y} {z}", interval=0)
+                        dimension = "主世界"
+                    elif user_dimensionality == 2:
+                        pyautogui.write(f"execute in minecraft:the_end run tp {x} {y} {z}", interval=0)
+                        dimension = "末地"
+                    elif user_dimensionality == 3:
+                        pyautogui.write(f"execute in minecraft:the_nether run tp  {x} {y} {z}", interval=0)
+                        dimension = "地狱"
                     pyautogui.press('enter')
+                    print(f"维度：{dimension}")
                     print(f"已传送到: {content} 坐标为 ({x}, {y}, {z})")
                     matched = True
                     break
