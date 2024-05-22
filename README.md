@@ -8,9 +8,10 @@
 
 本项目使用Python语言进行编写，所需依赖库如下：
 
-- `pygetwindow`
-- `win32gui`（`win32`）
-- `pyautogui`
+- pygetwindow
+- win32gui（win32）
+- pyautogui
+- pyperclip
 
 请确保您的Python环境和上述依赖库已经安装和配置完成。
 
